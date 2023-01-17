@@ -3,14 +3,33 @@ let playerChoice;
 let playerWins = 0;
 let computerWins = 0;
 
-function getComputerChoice() {
-    let compChoice = Math.random();
+const compScore = document.querySelector('#computer-score');
+const playerScore = document.querySelector('#player-score');
+const showPlayerChoice = document.querySelector('#player-pic');
+const showCompChoice = document.querySelector('#computer-pic');
+const result = document.querySelector('#result');
 
-    if (compChoice < 1/3) {
+
+function startOver() {
+    playerWins = 0;
+    computerWins = 0;
+    playerChoice = '';
+    computerChoice = '';
+    showPlayerChoice.textContent = `${playerChoice}`;
+    showCompChoice.textContent = `${computerChoice}`;
+    playerScore.textContent = `${playerWins}`;
+    compScore.textContent = `${computerWins}`;
+    result.textContent = '';
+}
+
+function getComputerChoice() {
+    let compChoice = Math.floor(Math.random() * 3);
+
+    if (compChoice == 0) {
         computerChoice = "Rock";
     }
 
-    else if (compChoice >= 1/3 && compChoice < 2/3) {
+    else if (compChoice == 1) {
         computerChoice = "Paper";
     }
 
@@ -19,96 +38,98 @@ function getComputerChoice() {
     }
 }
 
-function getPlayerChoice() {
-    while (playerChoice != "Rock" && playerChoice != "Paper" && playerChoice != "Scissors") {
-        playerChoice = prompt("Please enter \"Rock\", \"Paper\", or \"Scissors\": ");
+function selectRock() {
+    playerChoice = "Rock";
+    playRound();
+}
 
-        playerChoice = (playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1).toLowerCase());
+function selectPaper() {
+    playerChoice = "Paper";
+    playRound();
+}
 
-        if (playerChoice != "Rock" && playerChoice != "Paper" && playerChoice != "Scissors") {
-            alert ("Please enter a valid selection!");
-        }
-    };
+function selectScissors() {
+    playerChoice = "Scissors";
+    playRound();
 }
 
 function compareChoices() {
     if (computerChoice === "Rock") {
         if (playerChoice === "Rock") {
-            console.log("Tie!");
-            //alert("Tie!");
+            result.textContent = 'Tie!';
         }
         else if (playerChoice === "Paper") {
-            console.log("Paper covers Rock, you win!");
-            //alert("Paper covers Rock, you win!");
+            result.textContent = 'Paper covers Rock, you win!';
             playerWins = ++playerWins;
         }
         else {
-            console.log("Rock smashes Scissors, you lose!");
-            //alert("Rock smashes Scissors, you lose!");
+            result.textContent = 'Rock smashes Scissors, you lose!';
             computerWins = ++computerWins;
         }
     }
 
     else if (computerChoice === "Paper") {
         if (playerChoice === "Rock") {
-            console.log("Paper covers Rock, you lose!");
-            //alert("Paper covers Rock, you lose!");
+            result.textContent = 'Paper covers Rock, you lose!';
             computerWins = ++computerWins;
         }
         else if (playerChoice === "Paper") {
-            console.log("Tie");
-            //alert("Tie");
+            result.textContent = 'Tie!';
         }
         else {
-            console.log("Scissors cut Paper, you win!");
-            //alert("Scissors cut Paper, you win!");
+            result.textContent = 'Scissors cut Paper, you win!';
             playerWins = ++playerWins;
         }
     }
 
     else {
         if (playerChoice === "Rock") {
-            console.log("Rock crushes Scissors, you win!");
-            //alert("Rock crushes Scissors, you win!");
+            result.textContent = 'Rock crushes Scissors, you win!';
             playerWins = ++playerWins;
         }
         else if (playerChoice === "Paper") {
-            console.log("Scissors cut Paper, you lose!");
-            //alert("Scissors cut Paper, you lose!");
+            result.textContent = 'Scissors cut Paper, you lose!';
             computerWins = ++computerWins;
         }
         else {
-            console.log("Tie!");
-            //alert("Tie!");
+            result.textContent = 'Tie!';
         }
     }
 }
 
 function playRound() {
-    getPlayerChoice();
     getComputerChoice();
-    console.log(`You picked ${playerChoice}, the computer picked ${computerChoice}`);
-    //alert(`You picked ${playerChoice}, the computer picked ${computerChoice}`);
+    showPlayerChoice.textContent = `${playerChoice}`;
+    showCompChoice.textContent = `${computerChoice}`;
+
     compareChoices();
-    if (computerWins === 3) {
-        console.log(`Final score is Player: ${playerWins}, Computer: ${computerWins}.  The Computer Wins!`);
-        /*alert(`Final score is Player: ${playerWins}, Computer: ${computerWins}.
-        The Computer Wins!`);*/
+
+    playerScore.textContent = `${playerWins}`;
+    compScore.textContent = `${computerWins}`;
+
+    if (playerWins === 3) {
+        alert (`Game over, you win!\nFinal Score: Player: ${playerWins}, Computer: ${computerWins}`)
+        startOver();
     }
-    else if (playerWins === 3) {
-        console.log(`Final score is Player: ${playerWins}, Computer: ${computerWins}.  You Win!`);
-        /*alert(`Final score is Player: ${playerWins}, Computer: ${computerWins}.
-        You Win!`);*/
-    }
-    else {
-        console.log(`Current score is: Player: ${playerWins}, Computer: ${computerWins}.  Best of 5 wins!`)
-        /*alert(`Current score is: Player: ${playerWins}, Computer: ${computerWins}.
-        Best of 5 wins!`)*/
-    }
-    playerChoice = "";
-    computerChoice ="";
+    else if (computerWins === 3) {
+        alert (`Game over, you lose!\nFinal Score: Player: ${playerWins}, Computer: ${computerWins}`)
+        startOver();
+    };
 }
 
-while (computerWins < 3 && playerWins <3) {
-    playRound();
-}
+const clickRock = document.querySelector('#rock');
+clickRock.addEventListener('click', () => {
+    selectRock();    
+});
+
+const  clickPaper = document.querySelector('#paper');
+clickPaper.addEventListener('click', () => {
+    selectPaper();
+});
+
+const  clickScissors = document.querySelector('#scissors');
+clickScissors.addEventListener('click', () => {
+    selectScissors();
+});
+
+
