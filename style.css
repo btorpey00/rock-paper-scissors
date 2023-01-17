@@ -35,6 +35,7 @@ body {
     flex-direction: column;
     align-items: center;
     font-size: 45px;
+    text-align: center;
 }
 
 .make-choice p {
