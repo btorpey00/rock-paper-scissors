@@ -97,25 +97,35 @@ function compareChoices() {
     }
 }
 
-function playRound() {
-    getComputerChoice();
+function playRound() {        
+        getComputerChoice();
+
+        compareChoices();
+
+        updateResult();
+
+        if (playerWins == 3) {
+            updateResult();
+            setTimeout(function(){
+                alert (`Game over, you win!\nFinal Score: Player: ${playerWins}, Computer: ${computerWins}`)
+            }, 20);
+            setTimeout(function() {this.addEventListener('click', startOver())}, 50); 
+        }
+        else if (computerWins == 3) {
+            updateResult();
+            setTimeout(function(){
+                            alert (`Game over, you lose!\nFinal Score: Player: ${playerWins}, Computer: ${computerWins}`)
+            }, 20);
+            setTimeout(function() {this.addEventListener('click', startOver())}, 50);
+        };
+};
+
+function updateResult (){
     showPlayerChoice.textContent = `${playerChoice}`;
     showCompChoice.textContent = `${computerChoice}`;
-
-    compareChoices();
-
     playerScore.textContent = `${playerWins}`;
     compScore.textContent = `${computerWins}`;
-
-    if (playerWins === 3) {
-        alert (`Game over, you win!\nFinal Score: Player: ${playerWins}, Computer: ${computerWins}`)
-        startOver();
-    }
-    else if (computerWins === 3) {
-        alert (`Game over, you lose!\nFinal Score: Player: ${playerWins}, Computer: ${computerWins}`)
-        startOver();
-    };
-}
+};
 
 const clickRock = document.querySelector('#rock');
 clickRock.addEventListener('click', () => {
