@@ -8,6 +8,8 @@ const playerScore = document.querySelector('#player-score');
 const showPlayerChoice = document.querySelector('#player-pic');
 const showCompChoice = document.querySelector('#computer-pic');
 const result = document.querySelector('#result');
+const playerBox = document.getElementById('player-box');
+const computerBox = document.getElementById('computer-box')
 
 
 function startOver() {
@@ -15,11 +17,13 @@ function startOver() {
     computerWins = 0;
     playerChoice = '';
     computerChoice = '';
-    showPlayerChoice.textContent = `${playerChoice}`;
-    showCompChoice.textContent = `${computerChoice}`;
+    showPlayerChoice.classList = ''
+    showCompChoice.classList = ''
     playerScore.textContent = `${playerWins}`;
     compScore.textContent = `${computerWins}`;
     result.textContent = '';
+    playerBox.classList = 'choice-pic';
+    computerBox.classList = 'choice-pic';
 }
 
 function getComputerChoice() {
@@ -27,29 +31,35 @@ function getComputerChoice() {
 
     if (compChoice == 0) {
         computerChoice = "Rock";
+        showCompChoice.classList = "fa-regular fa-hand-back-fist";
     }
 
     else if (compChoice == 1) {
         computerChoice = "Paper";
+        showCompChoice.classList = "fa-regular fa-hand";
     }
 
     else {
         computerChoice = "Scissors";
+        showCompChoice.classList = "fa-regular fa-hand-scissors";
     }
 }
 
 function selectRock() {
     playerChoice = "Rock";
+    showPlayerChoice.classList = "fa-regular fa-hand-back-fist";
     playRound();
 }
 
 function selectPaper() {
     playerChoice = "Paper";
+    showPlayerChoice.classList = "fa-regular fa-hand";
     playRound();
 }
 
 function selectScissors() {
     playerChoice = "Scissors";
+    showPlayerChoice.classList = "fa-regular fa-hand-scissors";
     playRound();
 }
 
@@ -57,13 +67,20 @@ function compareChoices() {
     if (computerChoice === "Rock") {
         if (playerChoice === "Rock") {
             result.textContent = 'Tie!';
+            playerBox.classList = 'choice-pic';
+            computerBox.classList = 'choice-pic';
         }
         else if (playerChoice === "Paper") {
             result.textContent = 'Paper covers Rock, you win!';
+            playerBox.classList = 'choice-pic win';
+            computerBox.classList = 'choice-pic lose';
             playerWins = ++playerWins;
         }
         else {
             result.textContent = 'Rock smashes Scissors, you lose!';
+            playerBox.classList = 'choice-pic lose';
+            computerBox.classList = 'choice-pic win';
+
             computerWins = ++computerWins;
         }
     }
@@ -71,13 +88,19 @@ function compareChoices() {
     else if (computerChoice === "Paper") {
         if (playerChoice === "Rock") {
             result.textContent = 'Paper covers Rock, you lose!';
+            playerBox.classList = 'choice-pic lose';
+            computerBox.classList = 'choice-pic win';
             computerWins = ++computerWins;
         }
         else if (playerChoice === "Paper") {
             result.textContent = 'Tie!';
+            playerBox.classList = 'choice-pic';
+            computerBox.classList = 'choice-pic';
         }
         else {
             result.textContent = 'Scissors cut Paper, you win!';
+            playerBox.classList = 'choice-pic win';
+            computerBox.classList = 'choice-pic lose';
             playerWins = ++playerWins;
         }
     }
@@ -85,14 +108,20 @@ function compareChoices() {
     else {
         if (playerChoice === "Rock") {
             result.textContent = 'Rock crushes Scissors, you win!';
+            playerBox.classList = 'choice-pic win';
+            computerBox.classList = 'choice-pic lose';
             playerWins = ++playerWins;
         }
         else if (playerChoice === "Paper") {
             result.textContent = 'Scissors cut Paper, you lose!';
+            playerBox.classList = 'choice-pic lose';
+            computerBox.classList = 'choice-pic win';
             computerWins = ++computerWins;
         }
         else {
             result.textContent = 'Tie!';
+            playerBox.classList = 'choice-pic';
+            computerBox.classList = 'choice-pic';
         }
     }
 }
@@ -121,8 +150,8 @@ function playRound() {
 };
 
 function updateResult (){
-    showPlayerChoice.textContent = `${playerChoice}`;
-    showCompChoice.textContent = `${computerChoice}`;
+    // showPlayerChoice.textContent = `${playerChoice}`;
+    // showCompChoice.textContent = `${computerChoice}`;
     playerScore.textContent = `${playerWins}`;
     compScore.textContent = `${computerWins}`;
 };
